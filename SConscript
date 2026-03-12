@@ -36,4 +36,4 @@ if GetOption('extras'):
              [f'{visionipc_dir.abspath}/test_runner.cc', f'{visionipc_dir.abspath}/visionipc_tests.cc'],
               LIBS=['pthread'] + vipc_libs)
 
-Export('visionipc', 'msgq', 'msgq_python')
+Export('visionipc', 'msgq', 'msgq_python', 'vipc_libs')
