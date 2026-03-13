@@ -11,6 +11,17 @@
 
 std::atomic<int> offset = 0;
 
+void VisionBuf::init_cl(cl_device_id device_id, cl_context ctx) {
+  if (!device_id || !ctx) return;
+
+  int err;
+  buf_cl = clCreateBuffer(ctx, CL_MEM_READ_WRITE, len, NULL, &err);
+  assert(err == CL_SUCCESS);
+
+  copy_q = clCreateCommandQueue(ctx, device_id, 0, &err);
+  assert(err == CL_SUCCESS);
+}
+
 static void *malloc_with_fd(size_t len, int *fd) {
   char full_path[0x100];
 

@@ -26,7 +26,7 @@ vipc_objects = env.SharedObject(vipc_sources)
 visionipc = env.Library('visionipc', vipc_objects)
 
 
-vipc_libs = envCython["LIBS"] + [visionipc, msgq, common]
+vipc_libs = envCython["LIBS"] + [visionipc, msgq, common, 'OpenCL']
 envCython.Program(f'{visionipc_dir.abspath}/visionipc_pyx.so', f'{visionipc_dir.abspath}/visionipc_pyx.pyx',
                   LIBS=vipc_libs)
 

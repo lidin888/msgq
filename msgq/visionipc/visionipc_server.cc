@@ -26,7 +26,7 @@ std::string get_ipc_path(const std::string& name) {
   return path + "visionipc_" + name;
 }
 
-VisionIpcServer::VisionIpcServer(std::string name_) : name(name_) {
+VisionIpcServer::VisionIpcServer(std::string name, cl_device_id device_id, cl_context ctx) : name(name), device_id(device_id), ctx(ctx) {
   msg_ctx = Context::create();
 
   std::random_device rd("/dev/urandom");
@@ -56,6 +56,8 @@ void VisionIpcServer::create_buffers_with_sizes(VisionStreamType type, size_t nu
     buf->allocate(size);
     buf->idx = i;
     buf->type = type;
+
+    if (device_id) buf->init_cl(device_id, ctx);
 
     buf->init_yuv(width, height, stride, uv_offset);
 
